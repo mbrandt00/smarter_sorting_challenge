@@ -1,0 +1,14 @@
+default: &default
+  adapter: postgresql
+  encoding: unicode
+  pool: <%= ENV.fetch("RAILS_MAX_THREADS") { 5 } %>
+
+development:
+  <<: *default
+  database: smarter_sorting_challenge_development
+
+production:
+  <<: *default
+  database: smarter_sorting_challenge_production
+  username: smarter_sorting_challenge
+  password: <%= ENV['SMARTER_SORTING_CHALLENGE_DATABASE_PASSWORD'] %>
