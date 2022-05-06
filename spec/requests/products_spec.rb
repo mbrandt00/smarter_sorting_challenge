@@ -40,4 +40,24 @@ RSpec.describe 'Product Requests' do
             expect(response_info[:data].second[:attributes][:name]).to eq('The Best Pasta')
         end
     end
+    describe 'contains a certain ingredient' do 
+        before :each do 
+            post '/api/v1/products', params: {name: 'The Best Hand Sanitizer', ingredients: ['alcohol', 'water', 'copper gluconate']}
+            post '/api/v1/products', params: {name: 'The Best Martini', ingredients: ['alcohol', 'olive', 'water']}
+            # these both contain water
+            post '/api/v1/products', params: {name: 'The Best Pasta', ingredients: ['carbon', 'glucose', 'sodium chloride']}
+        end
+        it 'will return products that have a certain ingredient' do 
+            get '/api/v1/with_ingredient', params: {ingredients: 'water'}
+            response_info = JSON.parse(response.body, symbolize_names:true)
+            expect(response_info[:data].length).to eq(2)
+            expect(response_info[:data].first[:attributes][:name]).to eq('The Best Hand Sanitizer')
+            expect(response_info[:data].second[:attributes][:name]).to eq('The Best Martini')
+        end
+        it 'will return an error if no ingredients are included' do 
+            get '/api/v1/with_ingredient'
+            response_info = JSON.parse(response.body, symbolize_names:true)
+            expect(response_info[:error]).to eq('Please include ingredients!')
+        end
+    end
 end
