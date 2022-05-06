@@ -28,4 +28,16 @@ RSpec.describe 'Product Requests' do
             end
         end
     end
+    describe 'all products' do 
+        it 'will return all products' do 
+            #create two products
+            post '/api/v1/products', params: {name: 'The Best Hand Sanitizer', ingredients: ['ethyl alcohol', 'isopropyl alcohol', 'water', 'dimethyl siloxane', 'copper gluconate']}
+            post '/api/v1/products', params: {name: 'The Best Pasta', ingredients: ['carbon', 'glucose', 'water', 'sodium chloride']}
+            get '/api/v1/products'
+            response_info = JSON.parse(response.body, symbolize_names:true)
+            expect(response_info[:data].length).to eq(2)
+            expect(response_info[:data].first[:attributes][:name]).to eq('The Best Hand Sanitizer')
+            expect(response_info[:data].second[:attributes][:name]).to eq('The Best Pasta')
+        end
+    end
 end

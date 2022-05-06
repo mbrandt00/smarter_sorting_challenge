@@ -1,4 +1,8 @@
 class Api::V1::ProductsController < ApplicationController
+
+    def index 
+        render json: ProductSerializer.new(Product.all)
+    end
     def create 
         if params[:ingredients].nil?
             render json: {error: 'Please include ingredients!'}
