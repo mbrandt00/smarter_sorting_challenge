@@ -1,24 +1,44 @@
 # README
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+This is the technical assessment for the Backend Engineering Position at Smarter Sorting. 
 
-Things you may want to cover:
+## Setup 
 
-* Ruby version
+- Get the dependencies. This program was built on Ruby version 2.7.4. Either change the gemfile and .ruby-version to accomodate your local version OR install this version of Ruby via RBENV or RVM. Then bundle to install gems
 
-* System dependencies
+```
+bundle install
 
-* Configuration
+```
+- Now setup the database 
+```
+rails db:{create,migrate,seed}
+```
 
-* Database creation
+- Run tests to ensure everything is working as it should. 
+```
+bundle exec rspec  # runs all spec tests at once
+bundle exec rspec spec/requests # runs all feature tests 
+bundle exec rspec spec/models # runs all model tests
+``` 
 
-* Database initialization
+## Live demo 
 
-* How to run the test suite
+- First start the server (on port 3000)
+``` 
+rails server -p 3000
+```
+### Viewing all products in database
+The database was seeded with data generated from the Faker gem, so the data may seem kind of odd. 
 
-* Services (job queues, cache servers, search engines, etc.)
+In your browser, visit
+```
+localhost:3000/api/v1/products
+```
 
-* Deployment instructions
-
-* ...
+### View products that contain a certain ingredient/element
+To see all the products that contain aluminum, navigate to: 
+```
+localhost:3000/api/v1/with_ingredient?ingredients=Aluminum
+```
+Other possibilities include Terbium, Ferbium, and Radon
