@@ -18,7 +18,7 @@ group :development, :test do
   gem 'faker'
   gem 'pry'
   gem 'rspec-rails'
-  gem 'simple-cov'
+  gem 'simplecov'
 end
 
 group :development do
